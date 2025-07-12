@@ -1,0 +1,33 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log
+.env
+
+# React Native / Expo
+.expo/
+.expo-shared/
+web-build/
+dist/
+*.log
+
+# macOS & system files
+.DS_Store
+Thumbs.db
+
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# .NET build output
+bin/
+obj/
+*.dbmdl
+*.pdb
+
+# Git-related
+*.orig
+*.rej
