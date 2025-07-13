@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 import { TouchableWithoutFeedback } from "react-native";
 
 import Text from "./Text";
-console.log("Text:", Text);
 import Block from "./Block";
 import Image from "./Image";
 import { useTheme } from "./../hooks/useTheme";
@@ -21,7 +20,6 @@ const Article = ({
   onPress,
 }) => {
   const { t } = useTranslation();
-  console.log("t:", t);
   
   const { colors, gradients, icons, sizes } = useTheme();
 

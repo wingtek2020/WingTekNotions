@@ -38,10 +38,8 @@ import Image from "./../components/Image";
 import { useData } from "./../hooks/useData";
 import { useTheme } from "./../hooks/useTheme";
 import { useTranslation } from "./../hooks/useTranslation";
-console.log("usetranslation", useTranslation);
 
 const Drawer = createDrawerNavigator();
-console.log("Drawer", Drawer);
 
 /* Drawer menu screens navigation */
 const ScreensStack = () => {

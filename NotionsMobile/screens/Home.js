@@ -11,7 +11,7 @@ import Block from "./../components/Block";
 import Input from "./../components/Input";
 import Product from "./../components/Product";
 
-import * as SecureStore from 'expo-secure-store';
+import * as SecureStore from "expo-secure-store";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -22,13 +22,11 @@ const Home = () => {
 
   useEffect(() => {
     const loadToken = async () => {
-      const token = await SecureStore.getItemAsync('ravelry_token');
-      console.log('Ravelry Token:', token);
+      const token = await SecureStore.getItemAsync("ravelry_token");
     };
-  
+
     loadToken(); // Call the async function inside useEffect
   }, []);
-
 
   const handleProducts = useCallback(
     (tab) => {
@@ -37,7 +35,6 @@ const Home = () => {
     },
     [following, trending, setTab, setProducts]
   );
-
 
   return (
     <Block>

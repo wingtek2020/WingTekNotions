@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -13,168 +14,105 @@ import Block from "../components/Block";
 import Text from "../components/Text";
 import Button from "../components/Button";
 
-interface Needle {
-  id: string;
-  size: string;
-  length: string;
-}
+const needleTypes = ["Circular", "DPN", "Straight"];
+const sizes = Array.from({ length: 21 }, (_, i) => `US ${i}`);
 
-const STORAGE_KEY = "needles_inventory";
+const makeEmptyInventory = () =>
+  Object.fromEntries(
+    needleTypes.map(type => [
+      type,
+      Object.fromEntries(
+        sizes.map(size => [size, { hasNeedle: false, comments: [] }])
+      ),
+    ])
+  );
 
 const CircularNeedlesInventory: React.FC = () => {
-  const [needles, setNeedles] = useState<Needle[]>([]);
-  const [size, setSize] = useState("");
-  const [length, setLength] = useState("");
-  const [editingId, setEditingId] = useState<string | null>(null);
-
-  useEffect(() => {
-    loadNeedles();
-  }, []);
-
-  const loadNeedles = async () => {
-    try {
-      const stored = await AsyncStorage.getItem(STORAGE_KEY);
-      if (stored) setNeedles(JSON.parse(stored));
-    } catch (e) {
-      Alert.alert("Error", "Failed to load needles");
-    }
-  };
-
-  const saveNeedles = async (newNeedles: Needle[]) => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(newNeedles));
-      setNeedles(newNeedles);
-    } catch (e) {
-      Alert.alert("Error", "Failed to save needles");
-    }
-  };
-
-  const onAddOrUpdate = () => {
-    if (!size.trim() || !length.trim()) {
-      Alert.alert("Validation", "Please enter size and length");
-      return;
-    }
-
-    if (editingId) {
-      // Update existing
-      const updated = needles.map((n) =>
-        n.id === editingId ? { ...n, size, length } : n
-      );
-      saveNeedles(updated);
-      setEditingId(null);
-    } else {
-      // Add new
-      const newNeedle = {
-        id: Date.now().toString(),
-        size,
-        length,
-      };
-      saveNeedles([...needles, newNeedle]);
-    }
-    setSize("");
-    setLength("");
-  };
-
-  const onEdit = (needle: Needle) => {
-    setSize(needle.size);
-    setLength(needle.length);
-    setEditingId(needle.id);
-  };
-
-  const onDelete = (id: string) => {
-    Alert.alert("Delete", "Are you sure?", [
-      { text: "Cancel" },
-      {
-        text: "Delete",
-        style: "destructive",
-        onPress: () => {
-          const filtered = needles.filter((n) => n.id !== id);
-          saveNeedles(filtered);
-        },
-      },
-    ]);
-  };
+   const [inventory, setInventory] = useState(makeEmptyInventory());
 
   return (
     <Block padding={16} flex>
-      <Text h4 marginBottom={16}>
-        Circular Needles Inventory
-      </Text>
-
-      <TextInput
-        style={styles.input}
-        placeholder="Size (e.g. 6 mm)"
-        value={size}
-        onChangeText={setSize}
-      />
-
-      <TextInput
-        style={styles.input}
-        placeholder="Length (e.g. 24 inches)"
-        value={length}
-        onChangeText={setLength}
-      />
-
-      <Button onPress={onAddOrUpdate} marginBottom={24}>
-        <Text white center>
-          {editingId ? "Update Needle" : "Add Needle"}
-        </Text>
-      </Button>
-
-      <FlatList
-        data={needles}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Block
-            row
-            justify="space-between"
-            padding={12}
-            marginBottom={12}
-            card
-            borderRadius={8}
-          >
-            <View>
-              <Text bold>{item.size}</Text>
-              <Text gray>{item.length}</Text>
+      <ScrollView horizontal>
+        <View>
+          {/* Header row */}
+          <View style={styles.row}>
+            <View style={[styles.cell, styles.headerCell]}>
+              <Text style={styles.cellText}>Type / Size</Text>
             </View>
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                style={styles.button}
-                onPress={() => onEdit(item)}
-              >
-                <Text color="blue">Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={[styles.button, { marginLeft: 12 }]}
-                onPress={() => onDelete(item.id)}
-              >
-                <Text color="red">Delete</Text>
-              </TouchableOpacity>
+            {sizes.map((size) => (
+              <View key={size} style={[styles.cell, styles.headerCell]}>
+                <Text style={styles.cellText}>{size}</Text>
+              </View>
+            ))}
+          </View>
+            {/* Inventory grid */}
+          {needleTypes.map(type => (
+            <View key={type} style={styles.row}>
+              <View style={[styles.cell, styles.labelCell]}>
+                <Text style={styles.cellText}>{type}</Text>
+              </View>
+              {sizes.map(size => {
+                const entry = inventory[type][size];
+                return (
+                  <TouchableOpacity
+                    key={size}
+                    style={[
+                      styles.cell,
+                      {
+                        backgroundColor: entry.hasNeedle
+                          ? '#4CAF50'
+                          : '#f1f1f1',
+                      },
+                    ]}
+                    onPress={() => {
+                      const updated = { ...inventory };
+                      updated[type][size].hasNeedle = !entry.hasNeedle;
+                      setInventory(updated);
+                    }}
+                  >
+                    <Text style={styles.cellText}>
+                      {entry.hasNeedle ? '✔' : ''}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
-          </Block>
-        )}
-        ListEmptyComponent={
-          <Text center gray>
-            No needles added yet.
-          </Text>
-        }
-      />
+          ))}
+        </View>
+      </ScrollView>  
     </Block>
   );
 };
-
 const styles = StyleSheet.create({
-  input: {
-    borderColor: "#aaa",
-    borderWidth: 1,
-    padding: 8,
-    marginBottom: 12,
-    borderRadius: 6,
+  container: {
+    flex: 1,
+    padding: 10,
+    backgroundColor: '#fff',
   },
-  button: {
-    paddingHorizontal: 12,
-    justifyContent: "center",
+  header: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  cell: {
+    width: 80,
+    height: 60,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerCell: {
+    backgroundColor: '#eee',
+  },
+  labelCell: {
+    backgroundColor: '#ddd',
+  },
+  cellText: {
+    fontSize: 12,
   },
 });
-
 export default CircularNeedlesInventory;

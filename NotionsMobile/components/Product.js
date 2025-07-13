@@ -6,8 +6,6 @@ import Image from "./Image";
 import Text from "./Text";
 import { useTheme } from "./../hooks/useTheme";
 import { useTranslation } from "./../hooks/useTranslation";
-console.log("useTheme:", useTheme);
-console.log("useTranslationProduct:", useTranslation);
 
 const Product = ({ image, title, type = "vertical", linkLabel }) => {
   const { t } = useTranslation();

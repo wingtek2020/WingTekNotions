@@ -4,7 +4,6 @@ import { Animated, Pressable, Platform, StyleSheet } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
 import { useTheme } from './../hooks/useTheme';
-console.log("useTheme: ", useTheme);
 
 const Switch = ({
   id = 'Switch',
@@ -26,8 +25,6 @@ const Switch = ({
   const inactiveColor = inactiveFillColor || colors.switchOff;
 
   const animation = useRef(new Animated.Value(isChecked ? 28 : 2)).current;
-
-  console.log("animation: ", animation);
 
   const handleToggle = useCallback(() => {
     setChecked(!isChecked);
@@ -102,7 +99,7 @@ const Switch = ({
 
   // Generate component testID or accessibilityLabel based on Platform.OS
   const switchID = Platform.OS === 'android' ? { accessibilityLabel: id } : { testID: id };
-console.log("switchID: ", switchID);
+
   return (
     <Pressable
       {...switchID}
