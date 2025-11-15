@@ -14,7 +14,7 @@ import Block from "../components/Block";
 import Text from "../components/Text";
 import Button from "../components/Button";
 
-const needleTypes = ["Circular", "DPN", "Straight"];
+const needleTypes = ["Circular", "DPN", "Straight", "Interchangeable"];
 const sizes = Array.from({ length: 21 }, (_, i) => `US ${i}`);
 
 const makeEmptyInventory = () =>
