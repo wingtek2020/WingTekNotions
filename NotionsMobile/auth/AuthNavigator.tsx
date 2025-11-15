@@ -1,12 +1,34 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import Welcome from "../auth/Welcome";
-import Login from "../auth/Login";
-import Home from "../screens/Home";
+import { useTranslation } from "../hooks/useTranslation";
+import {
+  Home,
+  RavelryScarfPatterns,
+  CircularNeedlesInventory,
+  Components,
+  Profile,
+  Articles,
+  Rentals,
+  Rental,
+  Settings,
+  Register,
+  Extras,
+  Chat,
+  Shopping,
+  About,
+  Agreement,
+  Booking,
+  Notifications,
+  Privacy,
+  Login,
+} from "../screens";
 
 const Stack = createStackNavigator();
 
 export default function AuthNavigator({ onLogin }) {
+  const { t } = useTranslation();
+
   return (
     <Stack.Navigator initialRouteName="Welcome">
       <Stack.Screen name="Welcome" options={{ headerShown: false }}>
@@ -30,7 +52,7 @@ export default function AuthNavigator({ onLogin }) {
         component={RavelryScarfPatterns}
         options={{ title: t("navigation.ravelry_scarf_patterns") }}
       />
-       <Stack.Screen
+      <Stack.Screen
         name="CircularNeedlesInventory"
         component={CircularNeedlesInventory}
         options={{ title: t("navigation.circular_needles_inventory") }}
