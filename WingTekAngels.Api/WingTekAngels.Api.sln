@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36518.9 d17.14
+VisualStudioVersion = 17.14.36518.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingTekAngels.SchedulingApi", "WingTekAngels.SchedulingApi.csproj", "{BE4DCF3D-12D2-440D-9090-1730219A0F32}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WingTekAngels.Api", "WingTekAngels.Api.csproj", "{F4304BD6-9F86-7C0D-0E39-3CE79A89406E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BE4DCF3D-12D2-440D-9090-1730219A0F32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BE4DCF3D-12D2-440D-9090-1730219A0F32}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BE4DCF3D-12D2-440D-9090-1730219A0F32}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BE4DCF3D-12D2-440D-9090-1730219A0F32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4304BD6-9F86-7C0D-0E39-3CE79A89406E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4304BD6-9F86-7C0D-0E39-3CE79A89406E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4304BD6-9F86-7C0D-0E39-3CE79A89406E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4304BD6-9F86-7C0D-0E39-3CE79A89406E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

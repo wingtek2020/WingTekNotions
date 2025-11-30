@@ -1,6 +1,0 @@
-@WingTekAngels.SchedulingApi_HostAddress = http://localhost:5036
-
-GET {{WingTekAngels.SchedulingApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
